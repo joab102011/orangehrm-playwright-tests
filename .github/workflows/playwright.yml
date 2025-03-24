@@ -2,7 +2,7 @@ name: Playwright Tests
 
 on:
   schedule:
-    - cron: '0 */3 * * *' # Executa a cada 3 horas
+    - cron: '0 */3 * * *'
   push:
     branches:
       - main
@@ -10,7 +10,7 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04  # 🔧 Corrigido aqui
 
     steps:
       - name: Checkout código
@@ -24,10 +24,8 @@ jobs:
       - name: Instalar dependências
         run: npm install
 
-      - name: Instalar Playwright (com dependências do sistema)
-        uses: microsoft/playwright-github-action@v1
-        with:
-          with-deps: true
+      - name: Instalar Playwright com dependências nativas
+        run: npx playwright install --with-deps
 
       - name: Executar testes
         run: npx playwright test
