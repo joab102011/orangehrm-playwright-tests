@@ -35,12 +35,18 @@ jobs:
       - name: Instalar Playwright com dependências
         run: npx playwright install --with-deps
 
-      - name: Executar testes
-        run: npx playwright test
+      - name: Executar testes e gerar relatórios
+        run: |
+          npx playwright test --reporter=html,junit
 
-      - name: Upload do relatório (somente em falhas)
-        if: failure()
+      - name: Upload do relatório HTML
         uses: actions/upload-artifact@v4
         with:
-          name: playwright-report
+          name: playwright-html-report
           path: playwright-report/
+
+      - name: Upload do relatório XML
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-junit-report
+          path: playwright-report/results.xml
