@@ -2,7 +2,7 @@ name: Playwright Tests
 
 on:
   schedule:
-    - cron: '0 */3 * * *' # A cada 3 horas
+    - cron: '0 */3 * * *' # Executa a cada 3 horas
   push:
     branches:
       - main
@@ -19,15 +19,15 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20' # ou a versão desejada
+          node-version: '20'
 
       - name: Instalar dependências
         run: npm install
 
-      - name: Instalar Playwright com dependências
-        run: |
-          npx playwright install --with-deps
-        shell: bash
+      - name: Instalar Playwright (com dependências do sistema)
+        uses: microsoft/playwright-github-action@v1
+        with:
+          with-deps: true
 
       - name: Executar testes
         run: npx playwright test
