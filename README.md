@@ -2,6 +2,8 @@
 
 Este repositório contém testes automatizados de ponta a ponta (E2E) utilizando [Playwright](https://playwright.dev/) para a aplicação [OrangeHRM Demo](https://opensource-demo.orangehrmlive.com/). A suíte de testes cobre funcionalidades essenciais como login, navegação de menus, manipulação de funcionários (CRUD) e validações visuais em tabelas e formulários.
 
+> ⚠️ **Aviso**: Este projeto é público apenas para fins de estudo e demonstração de técnicas que podem ser aplicadas em projetos maiores. A aplicação testada é uma plataforma open-source de demonstração.
+
 ---
 
 ## 📂 Estrutura do Projeto
@@ -42,6 +44,11 @@ npx playwright test
 npx playwright show-report
 ```
 
+### Gerar relatório JUnit (XML):
+```bash
+npx playwright test --reporter=junit
+```
+
 ---
 
 ## ✅ Funcionalidades Testadas
@@ -75,7 +82,7 @@ on:
 
 ### 🎯 Relatórios
 - `playwright-report/`: Geração de relatório HTML com detalhes de cada teste
-- `junit.xml`: Exportação no formato JUnit para integração com outras ferramentas (CI/CD)
+- `test-results/`: Relatórios de execução em formato JUnit XML (para integração com pipelines CI/CD)
 
 ---
 
