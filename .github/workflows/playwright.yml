@@ -1,16 +1,16 @@
 name: Playwright Tests
 
 on:
-  schedule:
-    - cron: '0 */3 * * *'
   push:
     branches:
       - main
   pull_request:
+  schedule:
+    - cron: '0 */6 * * *' # Executa a cada 6 horas
 
 jobs:
   test:
-    runs-on: ubuntu-22.04  # 🔧 Corrigido aqui
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout código
@@ -19,18 +19,26 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '18'
+
+      - name: Cache de dependências
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
 
       - name: Instalar dependências
-        run: npm install
+        run: npm ci
 
-      - name: Instalar Playwright com dependências nativas
+      - name: Instalar Playwright com dependências
         run: npx playwright install --with-deps
 
       - name: Executar testes
         run: npx playwright test
 
-      - name: Salvar Relatórios (se falhar)
+      - name: Upload do relatório (somente em falhas)
         if: failure()
         uses: actions/upload-artifact@v4
         with:
